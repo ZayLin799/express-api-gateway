@@ -113,3 +113,11 @@ exports.verify_otp = async (req, res) => {
     return res.status(401).send({ message: "OTP don't match" });
   }
 };
+
+exports.get_admin = async (req, res) => {
+  const adminId = req.userId;
+  const getAdmin = await Admin.findById(adminId).select('-password');
+  res.status(200).send({
+    admin: getAdmin
+  });
+}

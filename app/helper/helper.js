@@ -4,6 +4,7 @@ const Role = db.role;
 function generateOTP() {
   return Math.floor(Math.random() * 9000) + 1000;
 }
+
 function getTodayDate() {
   const today = new Date();
   const date = `${today.getFullYear()}-${

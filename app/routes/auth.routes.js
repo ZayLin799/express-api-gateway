@@ -22,8 +22,13 @@ module.exports = function (app) {
     ],
     adminController.signup
   );
+
   app.post("/api/admin/auth/signin", adminController.signin);
+
   app.post("/api/admin/auth/verify_otp", adminController.verify_otp);
+
+  app.get("/api/admin", [authJwt.verifyToken, authJwt.isAdmin], adminController.get_admin);
+
 
   //user routes
   app.post(
@@ -34,14 +39,14 @@ module.exports = function (app) {
     ],
     userController.signup
   );
+
   app.post("/api/user/auth/signin", userController.signin);
+
   app.post("/api/user/auth/verify_otp", userController.verify_otp);
 
-  app.get("/api/users", [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
-    const userId = req.userId;
-    res.status(200).send({
-      msg: "Reach!",
-      id: userId,
-    });
-  });
+  app.get("/api/user", [authJwt.verifyToken, authJwt.isUser], userController.get_user);
+
 };
+
+
+
