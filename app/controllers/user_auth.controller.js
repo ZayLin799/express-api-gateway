@@ -74,7 +74,7 @@ exports.signin = async (req, res) => {
     }
     return res
       .status(200)
-      .send({ msg: "OTP sent", opt: otp_code, user_id: getUser._id });
+      .send({ msg: "OTP sent", otp: otp_code, user_id: getUser._id });
   } catch (error) {
     console.log("errr---", error);
     res.status(500).send({ message: error.message });
@@ -112,3 +112,11 @@ exports.verify_otp = async (req, res) => {
     return res.status(401).send({ message: "OTP don't match" });
   }
 };
+
+exports.get_user = async (req, res) => {
+  const userId = req.userId;
+  const getUser = await User.findById(userId).select('-password');
+  res.status(200).send({
+    user: getUser
+  });
+}
